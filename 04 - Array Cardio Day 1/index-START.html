@@ -71,12 +71,24 @@
 
       // 7. sort Exercise
       // Sort the people alphabetically by last name
-      const aplhabeticalNames = people.sort((a, b) => a - b);
+      const aplhabeticalNames = people.sort((a, b) => {
+        const [aLast, aFirst] = a.split(', ');
+        const [bLast, bFirst] = b.split(', ');
+        return aLast > bLast ? 1 : -1;
+      });
       console.log(aplhabeticalNames);
 
       // 8. Reduce Exercise
       // Sum up the instances of each of these
       const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+      const vehicles = data.reduce(function(obj, item) {
+        if(!obj[item]) { //If the string is not already present in the blank object,
+          obj[item] = 0; //create the string in the object and set it to 0.
+        }
+        obj[item]++; //Add one to the corresponding string in the object.
+        return obj;
+      }, {}); //We have a blank object and we increment it with whatever we find in the data array.
+      console.log(vehicles);
 
     </script>
   </body>
