@@ -14,15 +14,18 @@
   ctx.strokeStyle = '#BADA55';
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
-  ctx.lineWidth = 50;
+  ctx.lineWidth = 1;
 
   let isDrawing = false; // We need to let it know when it is time to draw and when it's just a normal mouse movement.
   let lastX = 0;
   let lastY = 0;
+  let hue = 0;
+  let direction = true;
 
   function draw(e) {
     if (!isDrawing) return;
     console.log(e);
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.beginPath(); // Start point
     ctx.moveTo(lastX, lastY); // End point
     ctx.lineTo(e.offsetX, e.offsetY);
@@ -30,6 +33,18 @@
     // lastX = e.offsetX;
     // lastY = e.offsetY;
     [lastX, lastY] = [e.offsetX, e.offsetY] // Equal to the last two lines. Called destructuring an array.
+    hue++;
+    if (hue >= 360) {
+      hue = 0;
+    }
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if (direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }
   }
 
   canvas.addEventListener('mousedown', (e) => {
